@@ -92,59 +92,35 @@ namespace Music_Playlist_Manager_Group42
             string inputUsername = txtUsername.Text;
             string inputPassword = txtPassword.Text;
 
-
             if (inputUsername == "" || inputPassword == "")
             {
                 MessageBox.Show("Please enter a username or a password");
                 return;
             }
-            else
+
+            btnLogin.ForeColor = Color.Black;
+
+            ReadDAtaToFile("users", myUsers);
+
+            bool isFound = false;
+            foreach (User u in myUsers)
             {
-                btnLogin.ForeColor = Color.Black;
-
-                try
+                if (u.UserName == inputUsername && u.Password == inputPassword)
                 {
-                    StreamReader inputFile = new StreamReader("users.txt");
-                    String userNameLine = inputFile.ReadLine();
-                    String passwordLine = inputFile.ReadLine();
-                    bool isFound = false;
-
-                    while (userNameLine != null && passwordLine != null)
-                    {
-
-                        if (inputUsername == userNameLine && inputPassword == passwordLine)
-                        {
-                            isFound = true;
-                            break;
-                        }
-                        else
-                        {
-                            userNameLine = inputFile.ReadLine();
-                            passwordLine = inputFile.ReadLine();
-                        }
-
-                    }
-                    inputFile.Close();
-
-                    if (isFound == true)
-                    {
-                        MessageBox.Show("You are now logged in!", "Login Successful");
-                        GoToHome();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Your login details do not exist in the database, try creating a new account!", "User not found");
-                    }
+                    isFound = true;
+                    break;
                 }
-
-
-                catch (Exception generalException)
-                {
-                    MessageBox.Show("Error: \n" + generalException.Message);
-                }
-
             }
 
+            if (isFound)
+            {
+                MessageBox.Show("You are now logged in!", "Login Successful");
+                GoToHome();
+            }
+            else
+            {
+                MessageBox.Show("Your login details do not exist in the database, try creating a new account!", "User not found");
+            }
         }
 
         private void pbxDisplay_Click(object sender, EventArgs e)

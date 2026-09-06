@@ -16,9 +16,46 @@ namespace Music_Playlist_Manager_Group42
 {
     public partial class frmSignUp : Form
     {
+        BindingList<User> myUsers = new BindingList<User>();
+        public void WriteDAtaToFile(string listname, BindingList<User> myList)
+        {
+            FileStream outFile = new FileStream(listname + ".ser", FileMode.Create, FileAccess.Write);
+
+            BinaryFormatter bFormatter = new BinaryFormatter();
+
+            bFormatter.Serialize(outFile, myList);
+
+            outFile.Close();
+        }
+
+        public void ReadDAtaToFile(string listname, BindingList<User> myList)
+        {
+            try
+            {
+                FileStream inFile = new FileStream(listname + ".ser", FileMode.Open, FileAccess.Read);
+
+                BinaryFormatter bFormatter = new BinaryFormatter();
+
+                myList.Clear();
+
+                var tempList = (BindingList<User>)bFormatter.Deserialize(inFile);
+
+                foreach (User myObject in tempList)
+                {
+                    myList.Add(myObject);
+
+                }
+                inFile.Close();
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("The data file could not be found");
+            }
+        }
         public frmSignUp()
         {
             InitializeComponent();
+            ReadDAtaToFile("users", myUsers);
             txtPassword.UseSystemPasswordChar = true;
             txtConfirmPassword.UseSystemPasswordChar = true;
         }
@@ -54,25 +91,16 @@ namespace Music_Playlist_Manager_Group42
                     return false;
                 }
              }
-    private bool UserExists(string username)
-        {
-            if (!File.Exists("users.txt"))
-            {
-                return false;
-            }
-            StreamReader sr = new StreamReader("users.txt");
-            string line;
-            while ((line = sr.ReadLine()) != null)
-            {
 
-                if (line == username)
+        private bool UserExists(string username)
+        {
+            foreach (User u in myUsers)
+            {
+                if (u.UserName == username)
                 {
-                    sr.Close();
                     return true;
                 }
-
             }
-            sr.Close();
             return false;
         }
 
@@ -98,60 +126,42 @@ namespace Music_Playlist_Manager_Group42
         {
             string username = txtUsername.Text;
             string password = txtPassword.Text;
-            string confirmPassword = txtConfirmPassword.Text;
 
             if (username == "" || password == "")
             {
                 MessageBox.Show("Enter both your username and password!");
-                return; 
-
+                return;
             }
-            else if (confirmPassword != password)
+            else if (txtConfirmPassword.Text != password)
             {
                 MessageBox.Show("Confirmation password does not match original password, please try again");
                 return;
             }
 
-            if (CheckPass(password))
-            {
-                MessageBox.Show("Your password is secure!");
-            }
-            else
+            if (!CheckPass(password))
             {
                 MessageBox.Show("Your password is not secure.");
                 return;
             }
 
-            // checking if the user already exits and saving the uses name.
             if (UserExists(username))
             {
-                MessageBox.Show("Username already exits.");
+                MessageBox.Show("Username already exists.");
                 return;
             }
 
-            try
-            {
-                //Using true to keep whats in the text file, and add more information.
-                using (StreamWriter writer = new StreamWriter("users.txt", true))
-                {
-                    writer.WriteLine(txtUsername.Text);
-                    writer.WriteLine(txtPassword.Text);
-                }
+            User newUser = new User();
+            newUser.UserName = username;
+            newUser.Password = password;
+            myUsers.Add(newUser);
+            WriteDAtaToFile("users", myUsers);
 
-                MessageBox.Show("Registration successful!");
-
-                txtUsername.Clear();
-                txtPassword.Clear();
-            }
-
-            //Handles
-            catch (Exception Ex)
-            {
-                MessageBox.Show("An error ocurred:" + Ex.Message);
-            }
+            MessageBox.Show("Registration successful!");
+            txtUsername.Clear();
+            txtPassword.Clear();
+            txtConfirmPassword.Clear();
 
             GoToLogin();
-        
         }
 
         private void pbxDisplay_Click(object sender, EventArgs e)
