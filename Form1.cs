@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+
 
 
 namespace Music_Playlist_Manager_Group42
@@ -19,6 +22,44 @@ namespace Music_Playlist_Manager_Group42
             InitializeComponent();
             txtPassword.UseSystemPasswordChar = true;
            
+        }
+
+        BindingList <User> myUsers = new BindingList <User>();
+        //serialize a list to a file
+        public void WriteDAtaToFile(string listname, BindingList <User> myList)
+        {
+            FileStream outFile = new FileStream (listname + ".ser", FileMode.Create, FileAccess.Write);
+
+            BinaryFormatter bFormatter = new BinaryFormatter();
+
+            bFormatter.Serialize(outFile, myList);
+
+            outFile.Close();
+        }
+
+        public void ReadDAtaToFile(string listname, BindingList<User> myList)
+        {
+            try
+            {
+                FileStream inFile = new FileStream(listname + ".ser", FileMode.Open, FileAccess.Read);
+
+                BinaryFormatter bFormatter = new BinaryFormatter();
+
+                myList.Clear();
+
+                var tempList = (BindingList<User>)bFormatter.Deserialize(inFile);
+
+                foreach (User myObject in tempList)
+                    {
+                         myList.Add(myObject);
+                        
+                     }
+                    inFile.Close();
+            }
+            catch(FileNotFoundException)
+            {
+                MessageBox.Show("The data file could not be found");
+            }
         }
 
         public void GoToSignUp()
