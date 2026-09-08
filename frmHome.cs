@@ -5,11 +5,12 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Linq;
 
 
 namespace Music_Playlist_Manager_Group42
@@ -146,8 +147,9 @@ namespace Music_Playlist_Manager_Group42
             if (lvPlaylist.SelectedItems.Count > 0)
             {
                 string playlistName = lvPlaylist.SelectedItems[0].Text;
-
-                frmPlaylist playlist = new frmPlaylist(playlistName);
+                // DELIVERABLE 2: Turn the selected playlist name into an object before opening the playlist form
+                Playlist chosenPlaylist = new Playlist(playlistName);
+                frmPlaylist playlist = new frmPlaylist(chosenPlaylist);
 
                 playlist.Show();
                 this.Hide();

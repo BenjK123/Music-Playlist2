@@ -18,9 +18,11 @@ namespace Music_Playlist_Manager_Group42
         {
             InitializeComponent();
         }
+        // DELIVERABLE 2: Store the entire playlist object instead of just a string name
+        Playlist currentPlaylist = null;
 
-        String currentPlaylist = "";
-        public frmPlaylist(String playlistName)
+        // DELIVERABLE 2: Constructor upgraded to accept the full Playlist object from the Home screen
+        public frmPlaylist(Playlist playlistName)
         {
             InitializeComponent();
             currentPlaylist = playlistName;
@@ -50,13 +52,10 @@ namespace Music_Playlist_Manager_Group42
 
         private void frmPlaylist_Load(object sender, EventArgs e)
         {
-            
-            lblPlaylistTitle.Text = "PLAYLIST TITLE: " + currentPlaylist;
-
-            string fileName = currentPlaylist + ".txt";
-           lblCreationDate.Text = "CREATION DATE: " + DateTime.Now.ToShortDateString();
+            RefreshPlaylistStats();
 
 
+            string fileName = currentPlaylist.PlaylistName + ".txt";
             lstSongs.Items.Clear();
             if (File.Exists(fileName))
             {
@@ -68,9 +67,24 @@ namespace Music_Playlist_Manager_Group42
             }
         }
 
+        // DELIVERABLE 2: Helper method to update playlist information labels automatically across the form
+        private void RefreshPlaylistStats()
+        {
+            if (currentPlaylist != null)
+            {
+                // DELIVERABLE 2: Read the actual playlist title property directly from the object.
+                lblPlaylistTitle.Text = "PLAYLIST TITLE: " + currentPlaylist.PlaylistName;
+                // DELIVERABLE 2: Pull the real timestamp date saved inside the object.
+                lblCreationDate.Text = "CREATION DATE: " + currentPlaylist.CreationDate.ToShortDateString();
+                // DELIVERABLE 2: Display the number of tracks dynamically from the songs collection list
+                lblTrackCount.Text = "TRACK COUNT: " + currentPlaylist.Songs.Count.ToString();
+            }
+        }
+
+
         private void btnDeleteSong_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btnUploadArtCover_Click(object sender, EventArgs e)
