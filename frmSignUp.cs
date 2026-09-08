@@ -32,20 +32,26 @@ namespace Music_Playlist_Manager_Group42
         {
             try
             {
-                FileStream inFile = new FileStream(listname + ".ser", FileMode.Open, FileAccess.Read);
-
-                BinaryFormatter bFormatter = new BinaryFormatter();
-
-                myList.Clear();
-
-                var tempList = (BindingList<User>)bFormatter.Deserialize(inFile);
-
-                foreach (User myObject in tempList)
+                string targetFile = listname + ".ser";
+                // Simple check to make sure the file exists before creating the stream
+                if (File.Exists(targetFile))
                 {
-                    myList.Add(myObject);
+                    FileStream inFile = new FileStream(listname + ".ser", FileMode.Open, FileAccess.Read);
 
+                    BinaryFormatter bFormatter = new BinaryFormatter();
+
+                    myList.Clear();
+
+                    var tempList = (BindingList<User>)bFormatter.Deserialize(inFile);
+
+                    foreach (User myObject in tempList)
+                    {
+                        myList.Add(myObject);
+
+                    }
+
+                    inFile.Close();
                 }
-                inFile.Close();
             }
             catch (FileNotFoundException)
             {
