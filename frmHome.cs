@@ -21,205 +21,105 @@ namespace Music_Playlist_Manager_Group42
         {
             InitializeComponent();
         }
-        //Declaring variables
         string currentUser;
-        int totalSongs = 0;
-        //Method
         public frmHome(string userName)
         {
             InitializeComponent();
+
+            dgvPlaylists.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            StatsInsights();
 
             currentUser = userName;
 
             lblWelcome.Text = "Welcome, " + currentUser + "!";
 
         }
-
-       
-        public void GoToPlaylist()
-        {
-            this.Hide();
-            frmPlaylist myForm = new frmPlaylist();
-            myForm.ShowDialog();
-            this.Show();
-
-        }
-
-        //Method using the streamWrite to be able to save each playlist to the text file.
-        private void SavePlaylist(string playlistName)
-        {
-            try
-            {
-                StreamWriter sw = new StreamWriter("Playlists.txt", true);
-
-                sw.WriteLine(playlistName);
-
-                sw.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        // Method to load the existing playlists
-        private void LoadPlaylists()
-        {
-            try
-            {
-                if (File.Exists("Playlists.txt"))
-                {
-                    StreamReader sr = new StreamReader("Playlists.txt");
-
-                    while (!sr.EndOfStream)
-                    {
-                        lvPlaylist.Items.Add(sr.ReadLine());
-                    }
-
-                    sr.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        //Loads the existing playlists
-        private void frmHome_Load(object sender, EventArgs e)
-        {
-           LoadPlaylists();
-        }
-
-
-        private void UpdateStatistics()
-        {
-            lblTotalPlaylists.Text =
-                "Total Playlists   : " + lvPlaylist.Items.Count;
-
-            lblTotalSongs.Text =
-                "Total Songs       : " + totalSongs;
-
-        }
-
-        private void IconChange()
-        {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-            {
-                ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
-
-                if (ofd.ShowDialog() == DialogResult.OK)
-
-                { picUser.Image = Image.FromFile(ofd.FileName); }
-            }
-        }
-
-       
+        BindingList<Playlist> Playlists = new BindingList<Playlist>();
         private void btnCreatePlaylist_Click(object sender, EventArgs e)
         {
-            if (txtPlaylistName.Text == "")
+            string playlistName = txtPlaylistName.Text;
+            if (playlistName == "")
             {
-                MessageBox.Show("Please enter a playlist name.");
+                MessageBox.Show("Please enter the name of your playlist!");
                 return;
             }
 
-            else
+            bool isFavorite = chkIsFavorite.Checked;
+            Playlist playlist;
+            playlist = new Playlist(playlistName, isFavorite);
+
+            Playlists.Add(playlist);
+            dgvPlaylists.DataSource = Playlists;
+
+            txtPlaylistName.Clear();
+            chkIsFavorite.Checked = false;
+
+            StatsInsights();
+
+        }
+
+        private void btnUploadSong_Click(object sender, EventArgs e)
+        {
+            string songName = txtSongName.Text;
+            string artist = txtArtist.Text;
+            string album = txtAlbum.Text;
+            string genre = txtGenre.Text;
+
+            if (songName == "" || artist == "" || album == "" || genre == "")
             {
-                ListViewItem item = new ListViewItem(txtPlaylistName.Text); // Create a new playlist item
-                
-                lvPlaylist.Items.Add(item); // Add the playlist to the ListView
-                txtPlaylistName.Clear();
-
-               UpdateStatistics();
-
-               SavePlaylist(txtPlaylistName.Text); //Saves Playlist using SW Method
+                MessageBox.Show("Please enter all fields!");
+                return;
             }
 
-        }
-      
-        private void btnRemovePlaylist_Click(object sender, EventArgs e)
-        {
-            if (lvPlaylist.Items.Count > 0)
-                lvPlaylist.Items.Remove(lvPlaylist.SelectedItems[0]);
-        }
+            OpenFileDialog openAudio = new OpenFileDialog();
 
-        private void btnGoToPlaylist_Click(object sender, EventArgs e)
-        {
-            if (lvPlaylist.SelectedItems.Count > 0)
+            if (openAudio.ShowDialog() == DialogResult.OK)
             {
-                string playlistName = lvPlaylist.SelectedItems[0].Text;
-                // DELIVERABLE 2: Turn the selected playlist name into an object before opening the playlist form
-                Playlist chosenPlaylist = new Playlist(playlistName);
-                frmPlaylist playlist = new frmPlaylist(chosenPlaylist);
+                string audioFilePath = openAudio.FileName;
 
-                playlist.Show();
-                this.Hide();
+                Song song;
+                song = new Song(songName, artist, album, genre, audioFilePath);
+
+                for (int i = 0; i < dgvPlaylists.SelectedRows.Count; i++)
+                {
+                    int selectedIndex = dgvPlaylists.SelectedRows[i].Index;
+                    Playlists[selectedIndex].Songs.Add(song);
+                    Playlists[selectedIndex].NumOfSongs = Playlists[selectedIndex].Songs.Count;
+                }
+
+                dgvPlaylists.Refresh();
+
+                StatsInsights();
+
+                txtSongName.Clear();
+                txtArtist.Clear();
+                txtAlbum.Clear();
+                txtGenre.Clear();
+
+                MessageBox.Show("Song uploaded successfully!");
             }
         }
-
-        private void lblIcon_Click(object sender, EventArgs e)
+        private void StatsInsights()
         {
-            IconChange();
-        }
+            int totalPlaylists = Playlists.Count;
+            int totalSongs = 0;
+            int emptyPlaylists = 0;
 
-        private void pbxArtCover1_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-
+            for (int i = 0; i < Playlists.Count; i++)
             {
-                ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
-                if (ofd.ShowDialog() == DialogResult.OK)
+                int songCount = Playlists[i].Songs.Count;
+                totalSongs += songCount;
 
-                { pbxArtCover1.Image = Image.FromFile(ofd.FileName); }
+                if (songCount == 0)
+                {
+                    emptyPlaylists++;
+                }
             }
-            
-        }
 
-        private void pbxArtCover2_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-
-            {
-                ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
-                if (ofd.ShowDialog() == DialogResult.OK)
-
-                { pbxArtCover2.Image = Image.FromFile(ofd.FileName); }
-            }
-        }
-
-        private void pbxArtCover3_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-
-            {
-                ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
-                if (ofd.ShowDialog() == DialogResult.OK)
-
-                { pbxArtCover3.Image = Image.FromFile(ofd.FileName); }
-            }
-        }
-
-        private void pbxArtCover4_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-
-            {
-                ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
-                if (ofd.ShowDialog() == DialogResult.OK)
-
-                { pbxArtCover4.Image = Image.FromFile(ofd.FileName); }
-            }
-        }
-
-        private void pbxArtCover5_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-
-            {
-                ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
-                if (ofd.ShowDialog() == DialogResult.OK)
-
-                { pbxArtCover5.Image = Image.FromFile(ofd.FileName); }
-            }
+            lblTotalPlaylists.Text = "Total Playlists: " + totalPlaylists;
+            lblTotalSongs.Text = "Total Songs: " + totalSongs;
+            lblEmptyPlaylists.Text = "Empty Playlists: " + emptyPlaylists;
         }
 
     }

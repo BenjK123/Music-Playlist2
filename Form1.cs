@@ -76,10 +76,7 @@ namespace Music_Playlist_Manager_Group42
         {
 
           frmHome myForm = new frmHome(txtUsername.Text);
-          myForm.ShowDialog();
-
-            this.Show();
-            this.Hide();
+            myForm.Show();
         }
 
         private void btnGoToSignUp_Click_1(object sender, EventArgs e)
@@ -115,11 +112,14 @@ namespace Music_Playlist_Manager_Group42
             if (isFound)
             {
                 MessageBox.Show("You are now logged in!", "Login Successful");
+                this.Hide();
                 GoToHome();
+               
             }
             else
             {
                 MessageBox.Show("Your login details do not exist in the database, try creating a new account!", "User not found");
+                GoToSignUp();
             }
         }
 

@@ -11,39 +11,28 @@ namespace Music_Playlist_Manager_Group42
     [Serializable]
     public class Playlist
     {
-        //data members
         private string mPlaylistName;
-        private DateTime mCreationDate;
         private List<Song> mSongs;
+        private int mNumOfSongs;
+        private DateTime mCreationDate;
+        private bool mIsFavorite;
 
-        //constructor
-        public Playlist(string playlistName)
-        {
-            mPlaylistName = playlistName;
-            mCreationDate = DateTime.Now;
-            mSongs = new List<Song>();
-        }
-
-        public Playlist()
-        {
-            mSongs = new List<Song>();
-        }
-
-        //methods
-        public void AddSong(Song song)
-        {
-            Songs.Add(song);
-        }
-
-        public bool RemoveSong(Song song)
-        {
-            return Songs.Remove(song);
-        }
-        //properties
         public string PlaylistName
         {
             get { return mPlaylistName; }
             set { mPlaylistName = value; }
+        }
+
+        public List<Song> Songs
+        {
+            get { return mSongs; }
+            set { mSongs = value; }
+        }
+
+        public int NumOfSongs
+        {
+            get { return mNumOfSongs; }
+            set { mNumOfSongs = value; }
         }
 
         public DateTime CreationDate
@@ -52,10 +41,28 @@ namespace Music_Playlist_Manager_Group42
             set { mCreationDate = value; }
         }
 
-        public List<Song> Songs
+        public bool IsFavorite
         {
-            get { return mSongs; }
-            set { mSongs = value; }
+            get { return mIsFavorite; }
+            set { mIsFavorite = value; }
+        }
+
+        public Playlist()
+        {
+            mPlaylistName = "";
+            mSongs = new List<Song>();
+            mCreationDate = DateTime.Now;
+            mNumOfSongs = 0;
+            mIsFavorite = false;
+        }
+
+        public Playlist(string playlistName, bool isFavorite)
+        {
+            mPlaylistName = playlistName;
+            mSongs = new List<Song>();
+            mCreationDate = DateTime.Now;
+            mNumOfSongs = 0;
+            mIsFavorite = isFavorite;
         }
 
     }
