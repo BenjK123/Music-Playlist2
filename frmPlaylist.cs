@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
-using System.IO;
 
 namespace Music_Playlist_Manager_Group42
 {
@@ -122,8 +123,7 @@ namespace Music_Playlist_Manager_Group42
         {
             if(txtGenre.Text=="" || txtArtist.Text=="" || txtAlbum.Text=="")
             {
-                MessageBox.Show("Cannot add empty song !","Error!" +
-                    "");
+                MessageBox.Show("Please fill in all the fields!","Error!");
                 return;
 
             }
@@ -134,6 +134,7 @@ namespace Music_Playlist_Manager_Group42
             Song newSong = new Song();
 
             OpenFileDialog path = new OpenFileDialog();
+            path.Filter = "Audio Files|*.mp3;*.wav;*.wma;*.m4a;*.flac|All Files|*.*";
             path.ShowDialog();
 
             newSong.Artist = artist;
@@ -158,7 +159,7 @@ namespace Music_Playlist_Manager_Group42
         string selectedFile;
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            if (dgvSong.CurrentRow == null )
+            if (string.IsNullOrWhiteSpace(dgvSong.CurrentCell.Value.ToString()))
             {
                 MessageBox.Show("Please choose a song. This is empty!", "Error");
                 return;
