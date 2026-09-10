@@ -17,7 +17,7 @@ namespace Music_Playlist_Manager_Group42
     public partial class frmSignUp : Form
     {
         BindingList<User> myUsers = new BindingList<User>();
-        public void WriteDAtaToFile(string listname, BindingList<User> myList)
+        public void WriteDataToFile(string listname, BindingList<User> myList)
         {
             FileStream outFile = new FileStream(listname + ".ser", FileMode.Create, FileAccess.Write);
 
@@ -28,7 +28,7 @@ namespace Music_Playlist_Manager_Group42
             outFile.Close();
         }
 
-        public void ReadDAtaToFile(string listname, BindingList<User> myList)
+        public void ReadDataToFile(string listname, BindingList<User> myList)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace Music_Playlist_Manager_Group42
         public frmSignUp()
         {
             InitializeComponent();
-            ReadDAtaToFile("users", myUsers);
+            ReadDataToFile("users", myUsers);
             txtPassword.UseSystemPasswordChar = true;
             txtConfirmPassword.UseSystemPasswordChar = true;
         }
@@ -160,7 +160,7 @@ namespace Music_Playlist_Manager_Group42
             newUser.UserName = username;
             newUser.Password = password;
             myUsers.Add(newUser);
-            WriteDAtaToFile("users", myUsers);
+            WriteDataToFile("users", myUsers);
 
             MessageBox.Show("Registration successful!");
             txtUsername.Clear();

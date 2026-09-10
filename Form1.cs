@@ -26,7 +26,7 @@ namespace Music_Playlist_Manager_Group42
 
         BindingList <User> myUsers = new BindingList <User>();
         //serialize a list to a file
-        public void WriteDAtaToFile(string listname, BindingList <User> myList)
+        public void WriteDataToFile(string listname, BindingList <User> myList)
         {
             FileStream outFile = new FileStream (listname + ".ser", FileMode.Create, FileAccess.Write);
 
@@ -37,7 +37,7 @@ namespace Music_Playlist_Manager_Group42
             outFile.Close();
         }
 
-        public void ReadDAtaToFile(string listname, BindingList<User> myList)
+        public void ReadDataToFile(string listname, BindingList<User> myList)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace Music_Playlist_Manager_Group42
 
             btnLogin.ForeColor = Color.Black;
 
-            ReadDAtaToFile("users", myUsers);
+            ReadDataToFile("users", myUsers);
 
             bool isFound = false;
             foreach (User u in myUsers)
