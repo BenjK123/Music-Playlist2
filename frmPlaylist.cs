@@ -14,25 +14,34 @@ namespace Music_Playlist_Manager_Group42
 {
     public partial class frmPlaylist : Form
     {
+        // One unified property to keep track of the active playlist
+        public Playlist CurrentPlaylist { get; set; }
+
+        BindingList<Song> song_List = new BindingList<Song>();
+        string artist, genre, album;
+        string selectedFile;
+        int selectedIndex;
+
+        // Default constructor (required by designer tool)
         public frmPlaylist()
         {
             InitializeComponent();
         }
-        //A constructor that will take in the song object from the home form.
-        public frmPlaylist(Song song)
-        {
-            dgvSong.Rows.Add(song);
-        }
-        // DELIVERABLE 2: Store the entire playlist object instead of just a string name
-        Playlist currentPlaylist = null;
 
-        // DELIVERABLE 2: Constructor upgraded to accept the full Playlist object from the Home screen
-
-        string artist, genre, album;
-        public frmPlaylist(Playlist playlistName)
+        // The ONLY constructor that handles receiving the playlist from the Home form
+        public frmPlaylist(Playlist selectedPlaylist)
         {
             InitializeComponent();
-            currentPlaylist = playlistName;
+
+            // Save the playlist reference
+            this.CurrentPlaylist = selectedPlaylist;
+            this.Text = selectedPlaylist.PlaylistName;
+
+            // Load any existing songs from the playlist object into the BindingList
+            if (this.CurrentPlaylist.Songs != null)
+            {
+                song_List = new BindingList<Song>(this.CurrentPlaylist.Songs);
+            }
         }
         private void UploadArtCover()
         {
@@ -59,13 +68,16 @@ namespace Music_Playlist_Manager_Group42
 
         private void frmPlaylist_Load(object sender, EventArgs e)
         {
-            RefreshPlaylistStats(); 
-            lblPlaylistTitle.Text = "PLAYLIST TITLE: " + currentPlaylist;
+            // Bind the song list to the grid view
+            dgvSong.DataSource = song_List;
 
+            if (dgvSong.Columns["FilePath"] != null)
+                dgvSong.Columns["FilePath"].Visible = false;
 
-            string fileName = currentPlaylist + ".txt";
+            if (dgvSong.Columns["SongTitle"] != null)
+                dgvSong.Columns["SongTitle"].Width = 600;
 
-            lblCreationDate.Text = "CREATION DATE: " + DateTime.Now.ToShortDateString();
+            RefreshPlaylistStats();
 
 
             // Add sorting options
@@ -90,21 +102,21 @@ namespace Music_Playlist_Manager_Group42
 
         }
 
-        // DELIVERABLE 2: Helper method to update playlist information labels automatically across the form
         private void RefreshPlaylistStats()
         {
-            if (currentPlaylist != null)
+            if (CurrentPlaylist != null)
             {
-                // DELIVERABLE 2: Read the actual playlist title property directly from the object.
-                lblPlaylistTitle.Text = "PLAYLIST TITLE: " + currentPlaylist.PlaylistName;
-                // DELIVERABLE 2: Pull the real timestamp date saved inside the object.
-                lblCreationDate.Text = "CREATION DATE: " + currentPlaylist.CreationDate.ToShortDateString();
-                // DELIVERABLE 2: Display the number of tracks dynamically from the songs collection list
-                lblTrackCount.Text = "TRACK COUNT: " + currentPlaylist.Songs.Count.ToString();
+                // Sync the collection count
+                CurrentPlaylist.Songs = song_List.ToList();
+                CurrentPlaylist.NumOfSongs = song_List.Count;
+
+                lblPlaylistTitle.Text = "PLAYLIST TITLE: " + CurrentPlaylist.PlaylistName;
+                lblCreationDate.Text = "CREATION DATE: " + CurrentPlaylist.CreationDate.ToShortDateString();
+                lblTrackCount.Text = "TRACK COUNT: " + CurrentPlaylist.NumOfSongs.ToString();
             }
         }
 
-        int selectedIndex;
+        
         private void btnDeleteSong_Click(object sender, EventArgs e)
         {
             selectedIndex = dgvSong.CurrentCell.RowIndex;
@@ -117,7 +129,7 @@ namespace Music_Playlist_Manager_Group42
         {
             UploadArtCover();
         }
-        BindingList<Song> song_List = new BindingList<Song>();
+        
         private void btnAddSong_Click(object sender, EventArgs e)
         {
             if(txtGenre.Text=="" || txtArtist.Text=="" || txtAlbum.Text=="")
@@ -155,7 +167,7 @@ namespace Music_Playlist_Manager_Group42
             Clear();
             RefreshPlaylistStats();
         }
-        string selectedFile;
+        
         private void btnPlay_Click(object sender, EventArgs e)
         {
             if (dgvSong.CurrentRow == null )
@@ -250,5 +262,7 @@ namespace Music_Playlist_Manager_Group42
 
             txtArtist.Focus();  
         }
+
+       
     }
 }

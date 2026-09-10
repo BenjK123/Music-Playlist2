@@ -93,6 +93,7 @@
             this.btnGoToPlaylist.TabIndex = 22;
             this.btnGoToPlaylist.Text = "Go to Playlist";
             this.btnGoToPlaylist.UseVisualStyleBackColor = false;
+            this.btnGoToPlaylist.Click += new System.EventHandler(this.btnGoToPlaylist_Click);
             // 
             // btnCreatePlaylist
             // 

@@ -122,5 +122,30 @@ namespace Music_Playlist_Manager_Group42
             lblEmptyPlaylists.Text = "Empty Playlists: " + emptyPlaylists;
         }
 
+        public void GoToPlaylist()
+        {
+            if (dgvPlaylists.SelectedRows.Count > 0)
+            {
+                // 1. Grab the full Playlist object linked to the selected row
+                var selectedPlaylist = (Music_Playlist_Manager_Group42.Playlist)dgvPlaylists.SelectedRows[0].DataBoundItem;
+
+                this.Hide();
+
+                // 2. Pass the playlist directly to the updated constructor
+                frmPlaylist myForm = new frmPlaylist(selectedPlaylist);
+
+                myForm.ShowDialog();
+                this.Show();
+            }
+            else
+            {
+                MessageBox.Show("Please select a playlist from the list first.");
+            }
+        }
+
+        private void btnGoToPlaylist_Click(object sender, EventArgs e)
+        {
+            GoToPlaylist();
+        }
     }
 }
