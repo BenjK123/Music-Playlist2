@@ -64,7 +64,7 @@
             this.lblinfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lblinfo.Font = new System.Drawing.Font("Segoe Script", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblinfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblinfo.Location = new System.Drawing.Point(313, 39);
+            this.lblinfo.Location = new System.Drawing.Point(316, 28);
             this.lblinfo.Name = "lblinfo";
             this.lblinfo.Size = new System.Drawing.Size(310, 52);
             this.lblinfo.TabIndex = 10;
@@ -91,7 +91,7 @@
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox1.Font = new System.Drawing.Font("Stencil", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.DimGray;
-            this.groupBox1.Location = new System.Drawing.Point(12, 93);
+            this.groupBox1.Location = new System.Drawing.Point(12, 82);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -176,7 +176,7 @@
             this.btnPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPause.Font = new System.Drawing.Font("Modern No. 20", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPause.ForeColor = System.Drawing.Color.Red;
-            this.btnPause.Location = new System.Drawing.Point(540, 582);
+            this.btnPause.Location = new System.Drawing.Point(501, 567);
             this.btnPause.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(241, 34);
@@ -191,7 +191,7 @@
             this.btnPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPlay.Font = new System.Drawing.Font("Modern No. 20", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPlay.ForeColor = System.Drawing.Color.Green;
-            this.btnPlay.Location = new System.Drawing.Point(276, 582);
+            this.btnPlay.Location = new System.Drawing.Point(255, 566);
             this.btnPlay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(240, 34);
@@ -204,11 +204,11 @@
             // 
             this.dgvSong.AllowUserToAddRows = false;
             this.dgvSong.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSong.Location = new System.Drawing.Point(12, 621);
+            this.dgvSong.Location = new System.Drawing.Point(12, 606);
             this.dgvSong.Name = "dgvSong";
             this.dgvSong.RowHeadersWidth = 51;
             this.dgvSong.RowTemplate.Height = 24;
-            this.dgvSong.Size = new System.Drawing.Size(1029, 209);
+            this.dgvSong.Size = new System.Drawing.Size(1029, 235);
             this.dgvSong.TabIndex = 23;
             // 
             // btnAddSong
@@ -217,7 +217,7 @@
             this.btnAddSong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddSong.Font = new System.Drawing.Font("Modern No. 20", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddSong.ForeColor = System.Drawing.Color.Green;
-            this.btnAddSong.Location = new System.Drawing.Point(12, 582);
+            this.btnAddSong.Location = new System.Drawing.Point(12, 566);
             this.btnAddSong.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAddSong.Name = "btnAddSong";
             this.btnAddSong.Size = new System.Drawing.Size(237, 34);
@@ -232,7 +232,7 @@
             this.btnDeleteSong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeleteSong.Font = new System.Drawing.Font("Modern No. 20", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDeleteSong.ForeColor = System.Drawing.Color.Red;
-            this.btnDeleteSong.Location = new System.Drawing.Point(804, 582);
+            this.btnDeleteSong.Location = new System.Drawing.Point(759, 567);
             this.btnDeleteSong.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnDeleteSong.Name = "btnDeleteSong";
             this.btnDeleteSong.Size = new System.Drawing.Size(237, 34);
@@ -244,7 +244,7 @@
             // wmpMusicPlayer
             // 
             this.wmpMusicPlayer.Enabled = true;
-            this.wmpMusicPlayer.Location = new System.Drawing.Point(12, 358);
+            this.wmpMusicPlayer.Location = new System.Drawing.Point(12, 342);
             this.wmpMusicPlayer.Name = "wmpMusicPlayer";
             this.wmpMusicPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("wmpMusicPlayer.OcxState")));
             this.wmpMusicPlayer.Size = new System.Drawing.Size(1029, 219);
@@ -254,21 +254,21 @@
             // 
             this.txtArtist.Location = new System.Drawing.Point(975, 157);
             this.txtArtist.Name = "txtArtist";
-            this.txtArtist.Size = new System.Drawing.Size(100, 27);
+            this.txtArtist.Size = new System.Drawing.Size(149, 27);
             this.txtArtist.TabIndex = 27;
             // 
             // txtAlbum
             // 
             this.txtAlbum.Location = new System.Drawing.Point(975, 277);
             this.txtAlbum.Name = "txtAlbum";
-            this.txtAlbum.Size = new System.Drawing.Size(100, 27);
+            this.txtAlbum.Size = new System.Drawing.Size(149, 27);
             this.txtAlbum.TabIndex = 29;
             // 
             // txtGenre
             // 
             this.txtGenre.Location = new System.Drawing.Point(975, 216);
             this.txtGenre.Name = "txtGenre";
-            this.txtGenre.Size = new System.Drawing.Size(100, 27);
+            this.txtGenre.Size = new System.Drawing.Size(149, 27);
             this.txtGenre.TabIndex = 28;
             // 
             // lblArtist
