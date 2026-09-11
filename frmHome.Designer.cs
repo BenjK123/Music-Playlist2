@@ -41,7 +41,7 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.lblIcon = new System.Windows.Forms.Label();
             this.gbxStatsSelection = new System.Windows.Forms.GroupBox();
-            this.lblEmptyPlaylists = new System.Windows.Forms.Label();
+            this.lblFavouritePlaylist = new System.Windows.Forms.Label();
             this.pnlLetterhead = new System.Windows.Forms.Panel();
             this.dgvPlaylists = new System.Windows.Forms.DataGridView();
             this.btnUploadSong = new System.Windows.Forms.Button();
@@ -54,10 +54,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.chkIsFavorite = new System.Windows.Forms.CheckBox();
+            this.btnRemovePlaylist = new System.Windows.Forms.Button();
+            this.cmbView = new System.Windows.Forms.ComboBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.picUser)).BeginInit();
             this.gbxStatsSelection.SuspendLayout();
             this.pnlLetterhead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlaylists)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblWelcome
@@ -65,9 +69,10 @@
             this.lblWelcome.AutoSize = true;
             this.lblWelcome.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWelcome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
-            this.lblWelcome.Location = new System.Drawing.Point(281, 145);
+            this.lblWelcome.Location = new System.Drawing.Point(316, 216);
+            this.lblWelcome.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblWelcome.Name = "lblWelcome";
-            this.lblWelcome.Size = new System.Drawing.Size(114, 30);
+            this.lblWelcome.Size = new System.Drawing.Size(172, 45);
             this.lblWelcome.TabIndex = 17;
             this.lblWelcome.Text = "Welcome ";
             // 
@@ -75,9 +80,10 @@
             // 
             this.picUser.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picUser.Image = ((System.Drawing.Image)(resources.GetObject("picUser.Image")));
-            this.picUser.Location = new System.Drawing.Point(267, 1);
+            this.picUser.Location = new System.Drawing.Point(509, 0);
+            this.picUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.picUser.Name = "picUser";
-            this.picUser.Size = new System.Drawing.Size(81, 82);
+            this.picUser.Size = new System.Drawing.Size(120, 125);
             this.picUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picUser.TabIndex = 1;
             this.picUser.TabStop = false;
@@ -87,9 +93,10 @@
             this.btnGoToPlaylist.BackColor = System.Drawing.Color.Teal;
             this.btnGoToPlaylist.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold);
             this.btnGoToPlaylist.ForeColor = System.Drawing.Color.White;
-            this.btnGoToPlaylist.Location = new System.Drawing.Point(12, 457);
+            this.btnGoToPlaylist.Location = new System.Drawing.Point(18, 703);
+            this.btnGoToPlaylist.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnGoToPlaylist.Name = "btnGoToPlaylist";
-            this.btnGoToPlaylist.Size = new System.Drawing.Size(176, 30);
+            this.btnGoToPlaylist.Size = new System.Drawing.Size(234, 46);
             this.btnGoToPlaylist.TabIndex = 22;
             this.btnGoToPlaylist.Text = "Go to Playlist";
             this.btnGoToPlaylist.UseVisualStyleBackColor = false;
@@ -100,9 +107,10 @@
             this.btnCreatePlaylist.BackColor = System.Drawing.Color.Teal;
             this.btnCreatePlaylist.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold);
             this.btnCreatePlaylist.ForeColor = System.Drawing.Color.White;
-            this.btnCreatePlaylist.Location = new System.Drawing.Point(306, 213);
+            this.btnCreatePlaylist.Location = new System.Drawing.Point(541, 703);
+            this.btnCreatePlaylist.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCreatePlaylist.Name = "btnCreatePlaylist";
-            this.btnCreatePlaylist.Size = new System.Drawing.Size(206, 30);
+            this.btnCreatePlaylist.Size = new System.Drawing.Size(234, 46);
             this.btnCreatePlaylist.TabIndex = 21;
             this.btnCreatePlaylist.Text = "Create Playlist";
             this.btnCreatePlaylist.UseVisualStyleBackColor = false;
@@ -110,9 +118,10 @@
             // 
             // txtPlaylistName
             // 
-            this.txtPlaylistName.Location = new System.Drawing.Point(128, 218);
+            this.txtPlaylistName.Location = new System.Drawing.Point(0, 5);
+            this.txtPlaylistName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtPlaylistName.Name = "txtPlaylistName";
-            this.txtPlaylistName.Size = new System.Drawing.Size(172, 20);
+            this.txtPlaylistName.Size = new System.Drawing.Size(298, 26);
             this.txtPlaylistName.TabIndex = 20;
             // 
             // lblPlaylistName
@@ -120,9 +129,10 @@
             this.lblPlaylistName.AutoSize = true;
             this.lblPlaylistName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPlaylistName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
-            this.lblPlaylistName.Location = new System.Drawing.Point(8, 218);
+            this.lblPlaylistName.Location = new System.Drawing.Point(12, 335);
+            this.lblPlaylistName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPlaylistName.Name = "lblPlaylistName";
-            this.lblPlaylistName.Size = new System.Drawing.Size(114, 20);
+            this.lblPlaylistName.Size = new System.Drawing.Size(171, 29);
             this.lblPlaylistName.TabIndex = 19;
             this.lblPlaylistName.Text = "Playlist Title: ";
             // 
@@ -130,9 +140,10 @@
             // 
             this.lblTotalPlaylists.AutoSize = true;
             this.lblTotalPlaylists.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold);
-            this.lblTotalPlaylists.Location = new System.Drawing.Point(15, 27);
+            this.lblTotalPlaylists.Location = new System.Drawing.Point(22, 42);
+            this.lblTotalPlaylists.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTotalPlaylists.Name = "lblTotalPlaylists";
-            this.lblTotalPlaylists.Size = new System.Drawing.Size(104, 19);
+            this.lblTotalPlaylists.Size = new System.Drawing.Size(152, 30);
             this.lblTotalPlaylists.TabIndex = 9;
             this.lblTotalPlaylists.Text = "Total Playlists:";
             // 
@@ -140,9 +151,10 @@
             // 
             this.lblTotalSongs.AutoSize = true;
             this.lblTotalSongs.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold);
-            this.lblTotalSongs.Location = new System.Drawing.Point(172, 27);
+            this.lblTotalSongs.Location = new System.Drawing.Point(219, 42);
+            this.lblTotalSongs.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTotalSongs.Name = "lblTotalSongs";
-            this.lblTotalSongs.Size = new System.Drawing.Size(90, 19);
+            this.lblTotalSongs.Size = new System.Drawing.Size(133, 30);
             this.lblTotalSongs.TabIndex = 10;
             this.lblTotalSongs.Text = "Total Songs:";
             // 
@@ -158,65 +170,69 @@
             this.lblIcon.AutoSize = true;
             this.lblIcon.Font = new System.Drawing.Font("Segoe UI", 10.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
-            this.lblIcon.Location = new System.Drawing.Point(337, 102);
-            this.lblIcon.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblIcon.Location = new System.Drawing.Point(506, 157);
             this.lblIcon.Name = "lblIcon";
-            this.lblIcon.Size = new System.Drawing.Size(97, 20);
+            this.lblIcon.Size = new System.Drawing.Size(139, 30);
             this.lblIcon.TabIndex = 25;
             this.lblIcon.Text = "Change Icon";
             // 
             // gbxStatsSelection
             // 
-            this.gbxStatsSelection.Controls.Add(this.lblEmptyPlaylists);
+            this.gbxStatsSelection.Controls.Add(this.lblFavouritePlaylist);
             this.gbxStatsSelection.Controls.Add(this.lblTotalPlaylists);
             this.gbxStatsSelection.Controls.Add(this.lblTotalSongs);
             this.gbxStatsSelection.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbxStatsSelection.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
-            this.gbxStatsSelection.Location = new System.Drawing.Point(18, 508);
-            this.gbxStatsSelection.Margin = new System.Windows.Forms.Padding(2);
+            this.gbxStatsSelection.Location = new System.Drawing.Point(27, 782);
             this.gbxStatsSelection.Name = "gbxStatsSelection";
-            this.gbxStatsSelection.Padding = new System.Windows.Forms.Padding(2);
-            this.gbxStatsSelection.Size = new System.Drawing.Size(494, 74);
+            this.gbxStatsSelection.Size = new System.Drawing.Size(741, 114);
             this.gbxStatsSelection.TabIndex = 23;
             this.gbxStatsSelection.TabStop = false;
             this.gbxStatsSelection.Text = "Statistics Section";
             // 
-            // lblEmptyPlaylists
+            // lblFavouritePlaylist
             // 
-            this.lblEmptyPlaylists.AutoSize = true;
-            this.lblEmptyPlaylists.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold);
-            this.lblEmptyPlaylists.Location = new System.Drawing.Point(303, 27);
-            this.lblEmptyPlaylists.Name = "lblEmptyPlaylists";
-            this.lblEmptyPlaylists.Size = new System.Drawing.Size(113, 19);
-            this.lblEmptyPlaylists.TabIndex = 11;
-            this.lblEmptyPlaylists.Text = "Empty Playlists:";
+            this.lblFavouritePlaylist.AutoSize = true;
+            this.lblFavouritePlaylist.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold);
+            this.lblFavouritePlaylist.Location = new System.Drawing.Point(397, 42);
+            this.lblFavouritePlaylist.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFavouritePlaylist.Name = "lblFavouritePlaylist";
+            this.lblFavouritePlaylist.Size = new System.Drawing.Size(265, 30);
+            this.lblFavouritePlaylist.TabIndex = 11;
+            this.lblFavouritePlaylist.Text = "Total Favourite Playlist(s):";
             // 
             // pnlLetterhead
             // 
             this.pnlLetterhead.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
             this.pnlLetterhead.Controls.Add(this.picUser);
-            this.pnlLetterhead.Location = new System.Drawing.Point(76, 19);
-            this.pnlLetterhead.Margin = new System.Windows.Forms.Padding(2);
+            this.pnlLetterhead.Location = new System.Drawing.Point(2, 29);
             this.pnlLetterhead.Name = "pnlLetterhead";
-            this.pnlLetterhead.Size = new System.Drawing.Size(640, 81);
+            this.pnlLetterhead.Size = new System.Drawing.Size(1072, 125);
             this.pnlLetterhead.TabIndex = 26;
             // 
             // dgvPlaylists
             // 
+            this.dgvPlaylists.AllowUserToAddRows = false;
             this.dgvPlaylists.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPlaylists.Location = new System.Drawing.Point(12, 249);
+            this.dgvPlaylists.Location = new System.Drawing.Point(18, 383);
+            this.dgvPlaylists.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dgvPlaylists.Name = "dgvPlaylists";
-            this.dgvPlaylists.Size = new System.Drawing.Size(500, 202);
+            this.dgvPlaylists.ReadOnly = true;
+            this.dgvPlaylists.RowHeadersWidth = 62;
+            this.dgvPlaylists.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPlaylists.Size = new System.Drawing.Size(750, 311);
             this.dgvPlaylists.TabIndex = 27;
+            this.dgvPlaylists.SelectionChanged += new System.EventHandler(this.dgvPlaylists_SelectionChanged);
             // 
             // btnUploadSong
             // 
             this.btnUploadSong.BackColor = System.Drawing.Color.Teal;
             this.btnUploadSong.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold);
             this.btnUploadSong.ForeColor = System.Drawing.Color.White;
-            this.btnUploadSong.Location = new System.Drawing.Point(608, 457);
+            this.btnUploadSong.Location = new System.Drawing.Point(887, 703);
+            this.btnUploadSong.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnUploadSong.Name = "btnUploadSong";
-            this.btnUploadSong.Size = new System.Drawing.Size(176, 30);
+            this.btnUploadSong.Size = new System.Drawing.Size(264, 46);
             this.btnUploadSong.TabIndex = 28;
             this.btnUploadSong.Text = "Upload Song";
             this.btnUploadSong.UseVisualStyleBackColor = false;
@@ -224,30 +240,34 @@
             // 
             // txtSongName
             // 
-            this.txtSongName.Location = new System.Drawing.Point(684, 249);
+            this.txtSongName.Location = new System.Drawing.Point(1026, 383);
+            this.txtSongName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtSongName.Name = "txtSongName";
-            this.txtSongName.Size = new System.Drawing.Size(100, 20);
+            this.txtSongName.Size = new System.Drawing.Size(148, 26);
             this.txtSongName.TabIndex = 29;
             // 
             // txtArtist
             // 
-            this.txtArtist.Location = new System.Drawing.Point(684, 293);
+            this.txtArtist.Location = new System.Drawing.Point(1026, 451);
+            this.txtArtist.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtArtist.Name = "txtArtist";
-            this.txtArtist.Size = new System.Drawing.Size(100, 20);
+            this.txtArtist.Size = new System.Drawing.Size(148, 26);
             this.txtArtist.TabIndex = 30;
             // 
             // txtAlbum
             // 
-            this.txtAlbum.Location = new System.Drawing.Point(684, 348);
+            this.txtAlbum.Location = new System.Drawing.Point(1026, 535);
+            this.txtAlbum.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtAlbum.Name = "txtAlbum";
-            this.txtAlbum.Size = new System.Drawing.Size(100, 20);
+            this.txtAlbum.Size = new System.Drawing.Size(148, 26);
             this.txtAlbum.TabIndex = 31;
             // 
             // txtGenre
             // 
-            this.txtGenre.Location = new System.Drawing.Point(684, 403);
+            this.txtGenre.Location = new System.Drawing.Point(1026, 620);
+            this.txtGenre.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtGenre.Name = "txtGenre";
-            this.txtGenre.Size = new System.Drawing.Size(100, 20);
+            this.txtGenre.Size = new System.Drawing.Size(148, 26);
             this.txtGenre.TabIndex = 32;
             // 
             // label1
@@ -255,9 +275,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
-            this.label1.Location = new System.Drawing.Point(571, 249);
+            this.label1.Location = new System.Drawing.Point(856, 383);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(107, 20);
+            this.label1.Size = new System.Drawing.Size(157, 29);
             this.label1.TabIndex = 33;
             this.label1.Text = "Song Name:";
             // 
@@ -266,9 +287,10 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
-            this.label2.Location = new System.Drawing.Point(621, 293);
+            this.label2.Location = new System.Drawing.Point(856, 451);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 20);
+            this.label2.Size = new System.Drawing.Size(79, 29);
             this.label2.TabIndex = 34;
             this.label2.Text = "Artist:";
             // 
@@ -277,9 +299,10 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
-            this.label3.Location = new System.Drawing.Point(614, 348);
+            this.label3.Location = new System.Drawing.Point(856, 532);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 20);
+            this.label3.Size = new System.Drawing.Size(93, 29);
             this.label3.TabIndex = 35;
             this.label3.Text = "Album:";
             // 
@@ -288,9 +311,10 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
-            this.label4.Location = new System.Drawing.Point(614, 403);
+            this.label4.Location = new System.Drawing.Point(857, 620);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 20);
+            this.label4.Size = new System.Drawing.Size(92, 29);
             this.label4.TabIndex = 36;
             this.label4.Text = "Genre:";
             // 
@@ -299,18 +323,57 @@
             this.chkIsFavorite.AutoSize = true;
             this.chkIsFavorite.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkIsFavorite.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
-            this.chkIsFavorite.Location = new System.Drawing.Point(306, 190);
+            this.chkIsFavorite.Location = new System.Drawing.Point(299, 757);
+            this.chkIsFavorite.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkIsFavorite.Name = "chkIsFavorite";
-            this.chkIsFavorite.Size = new System.Drawing.Size(83, 20);
+            this.chkIsFavorite.Size = new System.Drawing.Size(202, 29);
             this.chkIsFavorite.TabIndex = 37;
-            this.chkIsFavorite.Text = "Favorite";
+            this.chkIsFavorite.Text = "Mark As Favorite";
             this.chkIsFavorite.UseVisualStyleBackColor = true;
+            this.chkIsFavorite.CheckedChanged += new System.EventHandler(this.chkIsFavorite_CheckedChanged);
+            // 
+            // btnRemovePlaylist
+            // 
+            this.btnRemovePlaylist.BackColor = System.Drawing.Color.Teal;
+            this.btnRemovePlaylist.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemovePlaylist.ForeColor = System.Drawing.Color.White;
+            this.btnRemovePlaylist.Location = new System.Drawing.Point(290, 703);
+            this.btnRemovePlaylist.Name = "btnRemovePlaylist";
+            this.btnRemovePlaylist.Size = new System.Drawing.Size(227, 46);
+            this.btnRemovePlaylist.TabIndex = 38;
+            this.btnRemovePlaylist.Text = "Remove Playlist";
+            this.btnRemovePlaylist.UseVisualStyleBackColor = false;
+            this.btnRemovePlaylist.Click += new System.EventHandler(this.btnRemovePlaylist_Click);
+            // 
+            // cmbView
+            // 
+            this.cmbView.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbView.FormattingEnabled = true;
+            this.cmbView.Items.AddRange(new object[] {
+            "All Playlists",
+            "Favourites Only"});
+            this.cmbView.Location = new System.Drawing.Point(593, 347);
+            this.cmbView.Name = "cmbView";
+            this.cmbView.Size = new System.Drawing.Size(175, 28);
+            this.cmbView.TabIndex = 39;
+            this.cmbView.SelectedIndexChanged += new System.EventHandler(this.cmbView_SelectedIndexChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.txtPlaylistName);
+            this.panel1.Location = new System.Drawing.Point(180, 327);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(299, 37);
+            this.panel1.TabIndex = 40;
             // 
             // frmHome
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(796, 609);
+            this.ClientSize = new System.Drawing.Size(1194, 937);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.cmbView);
+            this.Controls.Add(this.btnRemovePlaylist);
             this.Controls.Add(this.chkIsFavorite);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -325,12 +388,10 @@
             this.Controls.Add(this.lblWelcome);
             this.Controls.Add(this.btnGoToPlaylist);
             this.Controls.Add(this.btnCreatePlaylist);
-            this.Controls.Add(this.txtPlaylistName);
             this.Controls.Add(this.lblPlaylistName);
             this.Controls.Add(this.lblIcon);
             this.Controls.Add(this.gbxStatsSelection);
             this.Controls.Add(this.pnlLetterhead);
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmHome";
             this.Text = "Home";
             ((System.ComponentModel.ISupportInitialize)(this.picUser)).EndInit();
@@ -338,6 +399,8 @@
             this.gbxStatsSelection.PerformLayout();
             this.pnlLetterhead.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlaylists)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -358,7 +421,7 @@
         private System.Windows.Forms.GroupBox gbxStatsSelection;
         private System.Windows.Forms.Panel pnlLetterhead;
         private System.Windows.Forms.DataGridView dgvPlaylists;
-        private System.Windows.Forms.Label lblEmptyPlaylists;
+        private System.Windows.Forms.Label lblFavouritePlaylist;
         private System.Windows.Forms.Button btnUploadSong;
         private System.Windows.Forms.TextBox txtSongName;
         private System.Windows.Forms.TextBox txtArtist;
@@ -369,5 +432,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox chkIsFavorite;
+        private System.Windows.Forms.Button btnRemovePlaylist;
+        private System.Windows.Forms.ComboBox cmbView;
+        private System.Windows.Forms.Panel panel1;
     }
 }

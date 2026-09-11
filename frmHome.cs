@@ -26,6 +26,8 @@ namespace Music_Playlist_Manager_Group42
         {
             InitializeComponent();
 
+            cmbView.SelectedIndex = 0;
+
             dgvPlaylists.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             StatsInsights();
@@ -33,6 +35,9 @@ namespace Music_Playlist_Manager_Group42
             currentUser = userName;
 
             lblWelcome.Text = "Welcome, " + currentUser + "!";
+
+            LoadPlaylists();
+
 
         }
         BindingList<Playlist> Playlists = new BindingList<Playlist>();
@@ -45,19 +50,27 @@ namespace Music_Playlist_Manager_Group42
                 return;
             }
 
-            bool isFavorite = chkIsFavorite.Checked;
-            Playlist playlist;
-            playlist = new Playlist(playlistName, isFavorite);
+            for (int i = 0; i < Playlists.Count; i++)
+            {
+                if (Playlists[i].PlaylistName == playlistName)
+                {
+                    MessageBox.Show("A playlist with that name already exists.");
+                    return;
+                }
+            }
+
+            Playlist playlist = new Playlist(playlistName, false);
 
             Playlists.Add(playlist);
             dgvPlaylists.DataSource = Playlists;
 
             txtPlaylistName.Clear();
-            chkIsFavorite.Checked = false;
+
 
             StatsInsights();
 
         }
+
 
         private void btnUploadSong_Click(object sender, EventArgs e)
         {
@@ -72,7 +85,14 @@ namespace Music_Playlist_Manager_Group42
                 return;
             }
 
+            if (Playlists.Count == 0)
+            {
+                MessageBox.Show("Please create a playlist first.");
+                return;
+            }
+
             OpenFileDialog openAudio = new OpenFileDialog();
+            openAudio.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
 
             if (openAudio.ShowDialog() == DialogResult.OK)
             {
@@ -88,6 +108,7 @@ namespace Music_Playlist_Manager_Group42
                     Playlists[selectedIndex].NumOfSongs = Playlists[selectedIndex].Songs.Count;
                 }
 
+                SavePlaylists();
                 dgvPlaylists.Refresh();
 
                 StatsInsights();
@@ -97,55 +118,197 @@ namespace Music_Playlist_Manager_Group42
                 txtAlbum.Clear();
                 txtGenre.Clear();
 
-                MessageBox.Show("Song uploaded successfully!");
+                MessageBox.Show("Song uploaded successfully");
             }
         }
         private void StatsInsights()
         {
             int totalPlaylists = Playlists.Count;
             int totalSongs = 0;
-            int emptyPlaylists = 0;
+            int favouritePlaylists = 0;
 
             for (int i = 0; i < Playlists.Count; i++)
             {
                 int songCount = Playlists[i].Songs.Count;
                 totalSongs += songCount;
 
-                if (songCount == 0)
+                if (Playlists[i].IsFavorite)
                 {
-                    emptyPlaylists++;
+                    favouritePlaylists++;
                 }
             }
 
             lblTotalPlaylists.Text = "Total Playlists: " + totalPlaylists;
             lblTotalSongs.Text = "Total Songs: " + totalSongs;
-            lblEmptyPlaylists.Text = "Empty Playlists: " + emptyPlaylists;
+            lblFavouritePlaylist.Text = "Total Favourite Playlist(s): " + favouritePlaylists.ToString();
         }
 
-        public void GoToPlaylist()
+        private void SavePlaylists()
         {
-            if (dgvPlaylists.SelectedRows.Count > 0)
+            try
             {
-                // 1. Grab the full Playlist object linked to the selected row
-                var selectedPlaylist = (Music_Playlist_Manager_Group42.Playlist)dgvPlaylists.SelectedRows[0].DataBoundItem;
-
-                this.Hide();
-
-                // 2. Pass the playlist directly to the updated constructor
-                frmPlaylist myForm = new frmPlaylist(selectedPlaylist);
-
-                myForm.ShowDialog();
-                this.Show();
+                using (FileStream outFile = new FileStream("playlists.ser", FileMode.Create, FileAccess.Write))
+                {
+                    BinaryFormatter bFormatter = new BinaryFormatter();
+                    bFormatter.Serialize(outFile, Playlists);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select a playlist from the list first.");
+                MessageBox.Show("Error saving: " + ex.Message);
+            }
+        }
+
+        private void LoadPlaylists()
+        {
+            try
+            {
+                using (FileStream inFile = new FileStream("playlists.ser", FileMode.Open, FileAccess.Read))
+                {
+                    BinaryFormatter bFormatter = new BinaryFormatter();
+                    Playlists.Clear();
+
+                    BindingList<Playlist> holdList = (BindingList<Playlist>)bFormatter.Deserialize(inFile);
+
+                    for (int i = 0; i < holdList.Count; i++)
+                    {
+                        Playlists.Add(holdList[i]);
+                    }
+
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                // No file yet
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading: " + ex.Message);
+            }
+
+            dgvPlaylists.DataSource = Playlists;
+        }
+        private void cmbView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if (cmbView.SelectedIndex == 0)
+            {
+
+                ShowAllPlaylists();
+            }
+            else if (cmbView.SelectedIndex == 1)
+            {
+
+                ShowFavouritesOnly();
+            }
+        }
+        private void ShowAllPlaylists()
+        {
+            dgvPlaylists.DataSource = null;
+            dgvPlaylists.DataSource = Playlists;
+        }
+        private void ShowFavouritesOnly()
+        {
+            BindingList<Playlist> favourites = new BindingList<Playlist>();
+
+            for (int i = 0; i < Playlists.Count; i++)
+            {
+                if (Playlists[i].IsFavorite == true)
+                {
+                    favourites.Add(Playlists[i]);
+                }
+            }
+
+            if (favourites.Count == 0)
+            {
+                MessageBox.Show("You have no favourite playlists.");
+                // Reset to All Playlists
+                cmbView.SelectedIndex = 0;
+                return;
+            }
+
+            dgvPlaylists.DataSource = null;
+            dgvPlaylists.DataSource = favourites;
+        }
+
+        private void btnRemovePlaylist_Click(object sender, EventArgs e)
+        {
+            if (dgvPlaylists.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a playlist to remove.");
+                return;
+            }
+
+            Playlist selected = (Playlist)dgvPlaylists.CurrentRow.DataBoundItem;
+
+            DialogResult result = MessageBox.Show(
+                "Delete '" + selected.PlaylistName + "'?",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                Playlists.Remove(selected);
+                SavePlaylists();
+
+                dgvPlaylists.DataSource = null;
+                dgvPlaylists.DataSource = Playlists;
+
+                StatsInsights();
+                MessageBox.Show("Playlist removed.");
             }
         }
 
         private void btnGoToPlaylist_Click(object sender, EventArgs e)
         {
-            GoToPlaylist();
+            if (dgvPlaylists.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a playlist.");
+                return;
+            }
+
+            Playlist selected = (Playlist)dgvPlaylists.CurrentRow.DataBoundItem;
+            frmPlaylist playlistForm = new frmPlaylist(selected);
+            this.Hide();
+            playlistForm.ShowDialog();
+            this.Show();
+
+            // Refresh after closing
+            SavePlaylists();
+            StatsInsights();
+        }
+
+        private void chkIsFavorite_CheckedChanged(object sender, EventArgs e)
+        {
+            if (dgvPlaylists.CurrentRow == null)
+            {
+
+                chkIsFavorite.Checked = false;
+                return;
+            }
+
+            Playlist selected = (Playlist)dgvPlaylists.CurrentRow.DataBoundItem;
+
+
+            selected.IsFavorite = chkIsFavorite.Checked;
+
+            SavePlaylists();
+
+
+            dgvPlaylists.Refresh();
+
+            StatsInsights();
+        }
+
+        private void dgvPlaylists_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvPlaylists.CurrentRow == null)
+            {
+                chkIsFavorite.Checked = false;
+                return;
+            }
+
         }
     }
 }
