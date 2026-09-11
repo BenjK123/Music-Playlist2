@@ -39,6 +39,8 @@ namespace Music_Playlist_Manager_Group42
             LoadPlaylists();
 
 
+
+
         }
         BindingList<Playlist> Playlists = new BindingList<Playlist>();
         private void btnCreatePlaylist_Click(object sender, EventArgs e)
@@ -143,6 +145,31 @@ namespace Music_Playlist_Manager_Group42
             lblFavouritePlaylist.Text = "Total Favourite Playlist(s): " + favouritePlaylists.ToString();
         }
 
+
+        public void GoToPlaylist()
+        {
+            if (dgvPlaylists.SelectedRows.Count > 0)
+            {
+                
+                Playlist chosen = (Playlist)dgvPlaylists.SelectedRows[0].DataBoundItem;
+
+                this.Hide();
+
+                frmPlaylist myForm = new frmPlaylist(chosen);
+                myForm.ShowDialog();
+                SavePlaylists();
+              
+                // Show the home form again
+                this.Show();
+
+                // Refresh the grid so the image appears
+                dgvPlaylists.Refresh();
+            }
+            else
+            {
+                MessageBox.Show("Please select a playlist from the list first.");
+            }
+        }
         private void SavePlaylists()
         {
             try
@@ -187,6 +214,31 @@ namespace Music_Playlist_Manager_Group42
             }
 
             dgvPlaylists.DataSource = Playlists;
+            if (dgvPlaylists.Columns["CoverArtPath"] != null)
+            {
+                dgvPlaylists.Columns["CoverArtPath"].Visible = false;
+            }
+            
+            if (dgvPlaylists.Columns["Songs"] != null)
+            {
+                dgvPlaylists.Columns["Songs"].Visible = false;
+            }
+            if (dgvPlaylists.Columns["IsFavorite"] != null)
+                dgvPlaylists.Columns["IsFavorite"].Visible = true;
+
+           
+            if (dgvPlaylists.Columns["PlaylistName"] != null)
+                dgvPlaylists.Columns["PlaylistName"].HeaderText = "Playlist Name";
+
+            if (dgvPlaylists.Columns["NumOfSongs"] != null)
+                dgvPlaylists.Columns["NumOfSongs"].HeaderText = "Songs";
+
+            if (dgvPlaylists.Columns["CreationDate"] != null)
+                dgvPlaylists.Columns["CreationDate"].HeaderText = "Created On";
+
+           
+            if (dgvPlaylists.Columns["CoverArt"] != null)
+                dgvPlaylists.Columns["CoverArt"].DisplayIndex = 0;
         }
         private void cmbView_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -309,6 +361,59 @@ namespace Music_Playlist_Manager_Group42
                 return;
             }
 
+        }
+
+        private void lblIcon_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+            ofd.Title = "Choose a profile picture";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    picUser.Image = Image.FromFile(ofd.FileName);
+                }
+                catch
+                {
+                    MessageBox.Show("Could not load that image. Please try another one.");
+                }
+            }
+        }
+
+        private void dgvPlaylists_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvPlaylists.Columns[e.ColumnIndex].Name != "CoverArt")
+            {
+                return;
+            }
+
+            // Make sure the row is valid
+            if (e.RowIndex < 0 || e.RowIndex >= dgvPlaylists.Rows.Count)
+            {
+                return;
+            }
+
+            // Get the playlist for this row
+            Playlist playlist = (Playlist)dgvPlaylists.Rows[e.RowIndex].DataBoundItem;
+
+            // If the playlist has a cover image and the file exists, show it
+            if (playlist != null && playlist.CoverArtPath != "" && File.Exists(playlist.CoverArtPath))
+            {
+                try
+                {
+                    e.Value = Image.FromFile(playlist.CoverArtPath);
+                }
+                catch
+                {
+                    e.Value = null;
+                }
+            }
+            else
+            {
+                e.Value = null;
+            }
         }
     }
 }

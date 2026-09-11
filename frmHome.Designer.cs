@@ -57,6 +57,8 @@
             this.btnRemovePlaylist = new System.Windows.Forms.Button();
             this.cmbView = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.CoverArt = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.picUser)).BeginInit();
             this.gbxStatsSelection.SuspendLayout();
             this.pnlLetterhead.SuspendLayout();
@@ -67,12 +69,12 @@
             // lblWelcome
             // 
             this.lblWelcome.AutoSize = true;
-            this.lblWelcome.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWelcome.Font = new System.Drawing.Font("Showcard Gothic", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWelcome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
-            this.lblWelcome.Location = new System.Drawing.Point(316, 216);
+            this.lblWelcome.Location = new System.Drawing.Point(388, 227);
             this.lblWelcome.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblWelcome.Name = "lblWelcome";
-            this.lblWelcome.Size = new System.Drawing.Size(172, 45);
+            this.lblWelcome.Size = new System.Drawing.Size(186, 40);
             this.lblWelcome.TabIndex = 17;
             this.lblWelcome.Text = "Welcome ";
             // 
@@ -80,11 +82,11 @@
             // 
             this.picUser.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picUser.Image = ((System.Drawing.Image)(resources.GetObject("picUser.Image")));
-            this.picUser.Location = new System.Drawing.Point(509, 0);
+            this.picUser.Location = new System.Drawing.Point(487, 5);
             this.picUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.picUser.Name = "picUser";
-            this.picUser.Size = new System.Drawing.Size(120, 125);
-            this.picUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picUser.Size = new System.Drawing.Size(168, 144);
+            this.picUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picUser.TabIndex = 1;
             this.picUser.TabStop = false;
             // 
@@ -160,10 +162,9 @@
             // 
             // imageList1
             // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "Screenshot 2026-08-09 105258.png");
-            this.imageList1.Images.SetKeyName(1, "Screenshot 2026-08-09 105240.png");
             // 
             // lblIcon
             // 
@@ -175,6 +176,7 @@
             this.lblIcon.Size = new System.Drawing.Size(139, 30);
             this.lblIcon.TabIndex = 25;
             this.lblIcon.Text = "Change Icon";
+            this.lblIcon.Click += new System.EventHandler(this.lblIcon_Click);
             // 
             // gbxStatsSelection
             // 
@@ -205,15 +207,17 @@
             // 
             this.pnlLetterhead.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(166)))), ((int)(((byte)(154)))));
             this.pnlLetterhead.Controls.Add(this.picUser);
-            this.pnlLetterhead.Location = new System.Drawing.Point(2, 29);
+            this.pnlLetterhead.Location = new System.Drawing.Point(2, 0);
             this.pnlLetterhead.Name = "pnlLetterhead";
-            this.pnlLetterhead.Size = new System.Drawing.Size(1072, 125);
+            this.pnlLetterhead.Size = new System.Drawing.Size(1214, 154);
             this.pnlLetterhead.TabIndex = 26;
             // 
             // dgvPlaylists
             // 
             this.dgvPlaylists.AllowUserToAddRows = false;
             this.dgvPlaylists.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPlaylists.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.CoverArt});
             this.dgvPlaylists.Location = new System.Drawing.Point(18, 383);
             this.dgvPlaylists.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dgvPlaylists.Name = "dgvPlaylists";
@@ -222,6 +226,7 @@
             this.dgvPlaylists.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPlaylists.Size = new System.Drawing.Size(750, 311);
             this.dgvPlaylists.TabIndex = 27;
+            this.dgvPlaylists.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvPlaylists_CellFormatting);
             this.dgvPlaylists.SelectionChanged += new System.EventHandler(this.dgvPlaylists_SelectionChanged);
             // 
             // btnUploadSong
@@ -366,6 +371,23 @@
             this.panel1.Size = new System.Drawing.Size(299, 37);
             this.panel1.TabIndex = 40;
             // 
+            // panel2
+            // 
+            this.panel2.Location = new System.Drawing.Point(839, 361);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(343, 334);
+            this.panel2.TabIndex = 2;
+            // 
+            // CoverArt
+            // 
+            this.CoverArt.HeaderText = "Cover";
+            this.CoverArt.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.CoverArt.MinimumWidth = 8;
+            this.CoverArt.Name = "CoverArt";
+            this.CoverArt.ReadOnly = true;
+            this.CoverArt.Visible = false;
+            this.CoverArt.Width = 60;
+            // 
             // frmHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -392,6 +414,7 @@
             this.Controls.Add(this.lblIcon);
             this.Controls.Add(this.gbxStatsSelection);
             this.Controls.Add(this.pnlLetterhead);
+            this.Controls.Add(this.panel2);
             this.Name = "frmHome";
             this.Text = "Home";
             ((System.ComponentModel.ISupportInitialize)(this.picUser)).EndInit();
@@ -435,5 +458,7 @@
         private System.Windows.Forms.Button btnRemovePlaylist;
         private System.Windows.Forms.ComboBox cmbView;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.DataGridViewImageColumn CoverArt;
     }
 }

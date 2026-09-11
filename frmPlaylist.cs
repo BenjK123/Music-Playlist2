@@ -47,10 +47,18 @@ namespace Music_Playlist_Manager_Group42
         private void UploadArtCover()
         {
             OpenFileDialog uploadArtCover = new OpenFileDialog();
+            uploadArtCover.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+
             if (uploadArtCover.ShowDialog() == DialogResult.OK)
             {
-                String fileName = uploadArtCover.FileName;
+                string fileName = uploadArtCover.FileName;
                 pbxCoverArt.Image = Image.FromFile(fileName);
+
+                
+                if (CurrentPlaylist != null)
+                {
+                    CurrentPlaylist.CoverArtPath = fileName;
+                }
             }
         }
         private void backtohome()
@@ -69,8 +77,22 @@ namespace Music_Playlist_Manager_Group42
 
         private void frmPlaylist_Load(object sender, EventArgs e)
         {
-            // Bind the song list to the grid view
-            dgvSong.DataSource = song_List;
+            if(CurrentPlaylist != null && CurrentPlaylist.CoverArtPath != "")
+
+                if (File.Exists(CurrentPlaylist.CoverArtPath))
+                {
+                    try
+                    {
+                        pbxCoverArt.Image = Image.FromFile(CurrentPlaylist.CoverArtPath);
+                    }
+                    catch
+                    {
+                        // If the file is broken, just skip
+                    }
+                }
+
+                // Bind the song list to the grid view
+                dgvSong.DataSource = song_List;
 
             if (dgvSong.Columns["FilePath"] != null)
                 dgvSong.Columns["FilePath"].Visible = false;

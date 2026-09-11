@@ -17,6 +17,8 @@ namespace Music_Playlist_Manager_Group42
         private DateTime mCreationDate;
         private bool mIsFavorite;
 
+        private string mCoverArt;
+
         public string PlaylistName
         {
             get { return mPlaylistName; }
@@ -47,6 +49,12 @@ namespace Music_Playlist_Manager_Group42
             set { mIsFavorite = value; }
         }
 
+        public string CoverArtPath
+        {
+            get { return mCoverArt; }
+            set { mCoverArt = value; }
+        }
+
         public Playlist()
         {
             mPlaylistName = "";
@@ -54,6 +62,7 @@ namespace Music_Playlist_Manager_Group42
             mCreationDate = DateTime.Now;
             mNumOfSongs = 0;
             mIsFavorite = false;
+            mCoverArt = "";
         }
 
         public Playlist(string playlistName, bool isFavorite)
@@ -63,6 +72,7 @@ namespace Music_Playlist_Manager_Group42
             mCreationDate = DateTime.Now;
             mNumOfSongs = 0;
             mIsFavorite = isFavorite;
+            mCoverArt = "";
         }
 
     }

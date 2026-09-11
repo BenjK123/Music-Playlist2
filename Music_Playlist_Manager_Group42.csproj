@@ -80,10 +80,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="frmHome.resx">
+    <EmbeddedResource Include="frmHome.resx">
       <DependentUpon>frmHome.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmPlaylist.resx">
       <DependentUpon>frmPlaylist.cs</DependentUpon>
     </EmbeddedResource>
