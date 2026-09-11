@@ -61,18 +61,13 @@ namespace Music_Playlist_Manager_Group42
                 }
             }
         }
-        private void backtohome()
-        {
-            frmHome home = new frmHome();
-            home.ShowDialog();
-            this.Hide();
-        }
+       
         
        
 
         private void btnBackToHome_Click(object sender, EventArgs e)
         {
-            backtohome();
+            this.Close();
         }
 
         private void frmPlaylist_Load(object sender, EventArgs e)
