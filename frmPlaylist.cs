@@ -155,7 +155,7 @@ namespace Music_Playlist_Manager_Group42
         
         private void btnAddSong_Click(object sender, EventArgs e)
         {
-            if(txtGenre.Text=="" || txtArtist.Text=="" || txtAlbum.Text=="")
+            if(cbxGenre.Text=="" || txtArtist.Text=="" || txtAlbum.Text=="")
             {
                 MessageBox.Show("Please fill in all the fields!","Error!");
                 return;
@@ -163,7 +163,7 @@ namespace Music_Playlist_Manager_Group42
             }
             artist=txtArtist.Text;
             album=txtAlbum.Text;
-            genre = txtGenre.Text;
+            genre = cbxGenre.Text;
 
             Song newSong = new Song();
 
@@ -281,7 +281,7 @@ namespace Music_Playlist_Manager_Group42
 
             txtAlbum.Clear();
             txtArtist.Clear();
-            txtGenre.Clear();
+            cbxGenre.Text="";
 
             txtArtist.Focus();  
         }

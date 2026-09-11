@@ -46,10 +46,10 @@
             this.wmpMusicPlayer = new AxWMPLib.AxWindowsMediaPlayer();
             this.txtArtist = new System.Windows.Forms.TextBox();
             this.txtAlbum = new System.Windows.Forms.TextBox();
-            this.txtGenre = new System.Windows.Forms.TextBox();
             this.lblArtist = new System.Windows.Forms.Label();
             this.lblGenre = new System.Windows.Forms.Label();
             this.lblAlbum = new System.Windows.Forms.Label();
+            this.cbxGenre = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbxCoverArt)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSong)).BeginInit();
@@ -264,13 +264,6 @@
             this.txtAlbum.Size = new System.Drawing.Size(149, 27);
             this.txtAlbum.TabIndex = 29;
             // 
-            // txtGenre
-            // 
-            this.txtGenre.Location = new System.Drawing.Point(975, 216);
-            this.txtGenre.Name = "txtGenre";
-            this.txtGenre.Size = new System.Drawing.Size(149, 27);
-            this.txtGenre.TabIndex = 28;
-            // 
             // lblArtist
             // 
             this.lblArtist.AutoSize = true;
@@ -300,15 +293,31 @@
             this.lblAlbum.TabIndex = 32;
             this.lblAlbum.Text = "Album: ";
             // 
+            // cbxGenre
+            // 
+            this.cbxGenre.FormattingEnabled = true;
+            this.cbxGenre.Items.AddRange(new object[] {
+            "Jazz",
+            "Pop",
+            "Rock",
+            "Hip-Hop",
+            "R&B",
+            "Classical",
+            "Country"});
+            this.cbxGenre.Location = new System.Drawing.Point(975, 211);
+            this.cbxGenre.Name = "cbxGenre";
+            this.cbxGenre.Size = new System.Drawing.Size(121, 28);
+            this.cbxGenre.TabIndex = 8;
+            // 
             // frmPlaylist
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1182, 842);
+            this.Controls.Add(this.cbxGenre);
             this.Controls.Add(this.lblAlbum);
             this.Controls.Add(this.lblGenre);
             this.Controls.Add(this.lblArtist);
-            this.Controls.Add(this.txtGenre);
             this.Controls.Add(this.txtAlbum);
             this.Controls.Add(this.txtArtist);
             this.Controls.Add(this.wmpMusicPlayer);
@@ -355,9 +364,9 @@
         private AxWMPLib.AxWindowsMediaPlayer wmpMusicPlayer;
         private System.Windows.Forms.TextBox txtArtist;
         private System.Windows.Forms.TextBox txtAlbum;
-        private System.Windows.Forms.TextBox txtGenre;
         private System.Windows.Forms.Label lblArtist;
         private System.Windows.Forms.Label lblGenre;
         private System.Windows.Forms.Label lblAlbum;
+        private System.Windows.Forms.ComboBox cbxGenre;
     }
 }
