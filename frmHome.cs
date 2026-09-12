@@ -39,86 +39,105 @@ namespace Music_Playlist_Manager_Group42
             StatsInsights();
 
         }
- private void LoadCurrentUser()
+     private void LoadCurrentUser()
     {
         BindingList<User> users = new BindingList<User>();
 
         try
         {
             if (File.Exists("users.ser"))
-                {
-                    using (FileStream inFile = new FileStream(
+            {
+                using (FileStream inFile = new FileStream(
                     "users.ser",
                     FileMode.Open,
                     FileAccess.Read))
                 {
-                BinaryFormatter formatter = new BinaryFormatter();
+                    BinaryFormatter formatter = new BinaryFormatter();
 
-                users = (BindingList<User>)formatter.Deserialize(inFile);
+                    users = (BindingList<User>)formatter.Deserialize(inFile);
                 }
-        }
+            }
     }
         catch (Exception ex)
         {
             MessageBox.Show("Error loading user data: " + ex.Message);
+            return;
         }
 
-    foreach (User user in users)
-    {
-        if (user.UserName == currentUser)
+        foreach (User user in users)
         {
-            currentUserObject = user;
+            if (user.UserName == currentUser)
+            {
+                currentUserObject = user;
 
-            Playlists = new BindingList<Playlist>(
+                if (currentUserObject.Playlists == null)
+                {
+                    currentUserObject.Playlists = new List<Playlist>();
+                }
+
+                Playlists = new BindingList<Playlist>(
                 currentUserObject.Playlists);
 
-            break;
-        }
-    }
-
-    dgvPlaylists.DataSource = Playlists;
-}
-       
-        private void btnCreatePlaylist_Click(object sender, EventArgs e)
-        {
-            string playlistName = txtPlaylistName.Text.Trim();
-
-                if (playlistName == "")
-                {
-                MessageBox.Show("Please enter the name of your playlist!");
-                return;
-                }
-
-                if (currentUserObject == null)
-                {
-                MessageBox.Show("Could not find the current user.");
-                return;
-                }
-
-            foreach (Playlist playlist in Playlists)
-            {
-                if (playlist.PlaylistName.Equals(playlistName, StringComparison.OrdinalIgnoreCase))
-            {
-                MessageBox.Show(
-                "A playlist with that name already exists.");
-            return;
+                break;
             }
         }
 
-    Playlist newPlaylist = new Playlist(playlistName, false);
+              if (currentUserObject == null)
+            {
+            MessageBox.Show("Could not find the current user.");
+            return;
+            }
+
+        dgvPlaylists.DataSource = Playlists;
+    }
+       
+    private void btnCreatePlaylist_Click(object sender, EventArgs e)
+    {
+        string playlistName = txtPlaylistName.Text.Trim();
+
+            if (playlistName == "")
+            {
+            MessageBox.Show("Please enter the name of your playlist!");
+            return;
+            }
+
+            if (currentUserObject == null)
+            {
+                MessageBox.Show("Could not find the current user.");
+                return;
+            }
+
+            if (currentUserObject.Playlists == null)
+            {
+            currentUserObject.Playlists = new List<Playlist>();
+            }
+
+        foreach (Playlist playlist in Playlists)
+        {
+            if (playlist.PlaylistName.Equals(playlistName, StringComparison.OrdinalIgnoreCase))
+                {
+                MessageBox.Show("A playlist with that name already exists.");
+                return;
+                }
+        }
+
+        Playlist newPlaylist = new Playlist(playlistName, false);
 
         currentUserObject.Playlists.Add(newPlaylist);
+
         Playlists.Add(newPlaylist);
 
         dgvPlaylists.DataSource = null;
         dgvPlaylists.DataSource = Playlists;
 
-    SaveCurrentUser();
+        SaveCurrentUser();
 
-    txtPlaylistName.Clear();
+        txtPlaylistName.Clear();
 
-    StatsInsights();
-}
+        StatsInsights();
+
+        MessageBox.Show("Playlist created successfully!");
+    }
     private void SaveCurrentUser()
     {
         BindingList<User> users = new BindingList<User>();
