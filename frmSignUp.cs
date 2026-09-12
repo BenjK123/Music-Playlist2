@@ -115,12 +115,12 @@ namespace Music_Playlist_Manager_Group42
         //Then we go back to the login page.
         public void GoToLogin()
         {
-            this.Hide();
+            this.Close();
 
             frmLogin myForm = new frmLogin();
             myForm.ShowDialog();
+            
 
-            this.Show();
         }
 
         private void btnBackToLogin_Click(object sender, EventArgs e)
@@ -166,7 +166,6 @@ namespace Music_Playlist_Manager_Group42
             txtUsername.Clear();
             txtPassword.Clear();
             txtConfirmPassword.Clear();
-
             GoToLogin();
         }
 

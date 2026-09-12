@@ -17,6 +17,7 @@ namespace Music_Playlist_Manager_Group42
 {
     public partial class frmLogin : Form
     {
+        frmSignUp myForm = new frmSignUp();
         public frmLogin()
         {
             InitializeComponent();
@@ -66,7 +67,7 @@ namespace Music_Playlist_Manager_Group42
         {
             this.Hide();
 
-            frmSignUp myForm = new frmSignUp();
+            
             myForm.ShowDialog();
 
             this.Show();
@@ -76,7 +77,7 @@ namespace Music_Playlist_Manager_Group42
         {
 
           frmHome myForm = new frmHome(txtUsername.Text);
-            myForm.Show();
+            myForm.ShowDialog();
         }
 
         private void btnGoToSignUp_Click_1(object sender, EventArgs e)
@@ -113,6 +114,7 @@ namespace Music_Playlist_Manager_Group42
             {
                 MessageBox.Show("You are now logged in!", "Login Successful");
                 this.Hide();
+                myForm.Close();
                 GoToHome();
                
             }
