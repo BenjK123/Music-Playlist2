@@ -212,7 +212,7 @@ namespace Music_Playlist_Manager_Group42
                     Playlists[selectedIndex].NumOfSongs = Playlists[selectedIndex].Songs.Count;
                     }
 
-                    SavePlaylists();
+                    SaveCurrentUser();
                     dgvPlaylists.Refresh();
 
                     StatsInsights();
@@ -446,7 +446,7 @@ namespace Music_Playlist_Manager_Group42
 
             selected.IsFavorite = chkIsFavorite.Checked;
 
-            SavePlaylists();
+            SaveCurrentUser();
 
 
             dgvPlaylists.Refresh();
