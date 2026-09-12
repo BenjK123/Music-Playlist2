@@ -274,60 +274,7 @@ namespace Music_Playlist_Manager_Group42
         }
        
 
-        private void LoadPlaylists()
-        {
-            try
-            {
-                using (FileStream inFile = new FileStream("playlists.ser", FileMode.Open, FileAccess.Read))
-                {
-                    BinaryFormatter bFormatter = new BinaryFormatter();
-                    Playlists.Clear();
-
-                    BindingList<Playlist> holdList = (BindingList<Playlist>)bFormatter.Deserialize(inFile);
-
-                    for (int i = 0; i < holdList.Count; i++)
-                    {
-                        Playlists.Add(holdList[i]);
-                    }
-
-                }
-            }
-            catch (FileNotFoundException)
-            {
-                // No file yet
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading: " + ex.Message);
-            }
-
-            dgvPlaylists.DataSource = Playlists;
-            if (dgvPlaylists.Columns["CoverArtPath"] != null)
-            {
-                dgvPlaylists.Columns["CoverArtPath"].Visible = false;
-            }
-            
-            if (dgvPlaylists.Columns["Songs"] != null)
-            {
-                dgvPlaylists.Columns["Songs"].Visible = false;
-            }
-            if (dgvPlaylists.Columns["IsFavorite"] != null)
-                dgvPlaylists.Columns["IsFavorite"].Visible = true;
-
-           
-            if (dgvPlaylists.Columns["PlaylistName"] != null)
-                dgvPlaylists.Columns["PlaylistName"].HeaderText = "Playlist Name";
-
-            if (dgvPlaylists.Columns["NumOfSongs"] != null)
-                dgvPlaylists.Columns["NumOfSongs"].HeaderText = "Songs";
-
-            if (dgvPlaylists.Columns["CreationDate"] != null)
-                dgvPlaylists.Columns["CreationDate"].HeaderText = "Created On";
-
-           
-            if (dgvPlaylists.Columns["CoverArt"] != null)
-                dgvPlaylists.Columns["CoverArt"].DisplayIndex = 0;
-        }
+        
         private void cmbView_SelectedIndexChanged(object sender, EventArgs e)
         {
 
