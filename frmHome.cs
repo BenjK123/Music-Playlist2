@@ -21,7 +21,9 @@ namespace Music_Playlist_Manager_Group42
         {
             InitializeComponent();
         }
-        string currentUser;
+        private string currentUser;
+        private User currentUserObject;
+        private BindingList<Playlist> Playlists = new BindingList<Playlist>();
         public frmHome(string userName)
         {
             InitializeComponent();
@@ -30,49 +32,130 @@ namespace Music_Playlist_Manager_Group42
 
             dgvPlaylists.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            StatsInsights();
-
             currentUser = userName;
-
             lblWelcome.Text = "Welcome, " + currentUser + "!";
 
-            LoadPlaylists();
-
-
-
+            LoadCurrentUser();
+            StatsInsights();
 
         }
-        BindingList<Playlist> Playlists = new BindingList<Playlist>();
+ private void LoadCurrentUser()
+    {
+        BindingList<User> users = new BindingList<User>();
+
+        try
+        {
+            if (File.Exists("users.ser"))
+                {
+                    using (FileStream inFile = new FileStream(
+                    "users.ser",
+                    FileMode.Open,
+                    FileAccess.Read))
+                {
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                users = (BindingList<User>)formatter.Deserialize(inFile);
+                }
+        }
+    }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Error loading user data: " + ex.Message);
+        }
+
+    foreach (User user in users)
+    {
+        if (user.UserName == currentUser)
+        {
+            currentUserObject = user;
+
+            Playlists = new BindingList<Playlist>(
+                currentUserObject.Playlists);
+
+            break;
+        }
+    }
+
+    dgvPlaylists.DataSource = Playlists;
+}
+       
         private void btnCreatePlaylist_Click(object sender, EventArgs e)
         {
-            string playlistName = txtPlaylistName.Text;
-            if (playlistName == "")
-            {
+            string playlistName = txtPlaylistName.Text.Trim();
+
+                if (playlistName == "")
+                {
                 MessageBox.Show("Please enter the name of your playlist!");
                 return;
-            }
+                }
 
-            for (int i = 0; i < Playlists.Count; i++)
-            {
-                if (Playlists[i].PlaylistName == playlistName)
+                if (currentUserObject == null)
                 {
-                    MessageBox.Show("A playlist with that name already exists.");
-                    return;
+                MessageBox.Show("Could not find the current user.");
+                return;
+                }
+
+            foreach (Playlist playlist in Playlists)
+            {
+                if (playlist.PlaylistName.Equals(playlistName, StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show(
+                "A playlist with that name already exists.");
+            return;
+            }
+        }
+
+    Playlist newPlaylist = new Playlist(playlistName, false);
+
+        currentUserObject.Playlists.Add(newPlaylist);
+        Playlists.Add(newPlaylist);
+
+        dgvPlaylists.DataSource = null;
+        dgvPlaylists.DataSource = Playlists;
+
+    SaveCurrentUser();
+
+    txtPlaylistName.Clear();
+
+    StatsInsights();
+}
+    private void SaveCurrentUser()
+    {
+        BindingList<User> users = new BindingList<User>();
+
+        try
+        {
+            if (File.Exists("users.ser"))
+            {
+                using (FileStream inFile = new FileStream("users.ser", FileMode.Open, FileAccess.Read))
+                {
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                users = (BindingList<User>)formatter.Deserialize(inFile);
                 }
             }
 
-            Playlist playlist = new Playlist(playlistName, false);
+            for (int i = 0; i < users.Count; i++)
+            {
+                if (users[i].UserName == currentUser)
+                {
+                users[i] = currentUserObject;
+                break;
+                }
+            }
 
-            Playlists.Add(playlist);
-            dgvPlaylists.DataSource = Playlists;
+        using (FileStream outFile = new FileStream("users.ser",FileMode.Create,FileAccess.Write))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
 
-            txtPlaylistName.Clear();
-
-
-            StatsInsights();
-
+                formatter.Serialize(outFile, users);
+            }
         }
-
+        catch (Exception ex)
+            {
+                MessageBox.Show("Error saving user data: " + ex.Message);
+            }
+    }
 
         private void btnUploadSong_Click(object sender, EventArgs e)
         {
@@ -81,46 +164,46 @@ namespace Music_Playlist_Manager_Group42
             string album = txtAlbum.Text;
             string genre = txtGenre.Text;
 
-            if (songName == "" || artist == "" || album == "" || genre == "")
-            {
+                if (songName == "" || artist == "" || album == "" || genre == "")
+                {
                 MessageBox.Show("Please enter all fields!");
                 return;
-            }
+                }
 
-            if (Playlists.Count == 0)
-            {
-                MessageBox.Show("Please create a playlist first.");
-                return;
-            }
-
-            OpenFileDialog openAudio = new OpenFileDialog();
-            openAudio.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
-
-            if (openAudio.ShowDialog() == DialogResult.OK)
-            {
-                string audioFilePath = openAudio.FileName;
-
-                Song song;
-                song = new Song(songName, artist, album, genre, audioFilePath);
-
-                for (int i = 0; i < dgvPlaylists.SelectedRows.Count; i++)
+                if (Playlists.Count == 0)
                 {
+                    MessageBox.Show("Please create a playlist first.");
+                    return;
+                }
+
+                OpenFileDialog openAudio = new OpenFileDialog();
+                openAudio.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
+
+                if (openAudio.ShowDialog() == DialogResult.OK)
+                {
+                    string audioFilePath = openAudio.FileName;
+
+                    Song song;
+                    song = new Song(songName, artist, album, genre, audioFilePath);
+
+                    for (int i = 0; i < dgvPlaylists.SelectedRows.Count; i++)
+                    {
                     int selectedIndex = dgvPlaylists.SelectedRows[i].Index;
                     Playlists[selectedIndex].Songs.Add(song);
                     Playlists[selectedIndex].NumOfSongs = Playlists[selectedIndex].Songs.Count;
-                }
+                    }
 
-                SavePlaylists();
-                dgvPlaylists.Refresh();
+                    SavePlaylists();
+                    dgvPlaylists.Refresh();
 
-                StatsInsights();
+                    StatsInsights();
 
-                txtSongName.Clear();
-                txtArtist.Clear();
-                txtAlbum.Clear();
-                txtGenre.Clear();
+                    txtSongName.Clear();
+                    txtArtist.Clear();
+                    txtAlbum.Clear();
+                    txtGenre.Clear();
 
-                MessageBox.Show("Song uploaded successfully");
+                    MessageBox.Show("Song uploaded successfully");
             }
         }
         private void StatsInsights()
@@ -301,12 +384,11 @@ namespace Music_Playlist_Manager_Group42
 
             if (result == DialogResult.Yes)
             {
+                currentUserObject.Playlists.Remove(selected);
                 Playlists.Remove(selected);
-                SavePlaylists();
-
-                dgvPlaylists.DataSource = null;
+                SaveCurrentUser();
+                dgvPlaylists.Refresh();
                 dgvPlaylists.DataSource = Playlists;
-
                 StatsInsights();
                 MessageBox.Show("Playlist removed.");
             }
@@ -327,7 +409,7 @@ namespace Music_Playlist_Manager_Group42
             this.Show();
 
             // Refresh after closing
-            SavePlaylists();
+            SaveCurrentUser();
             StatsInsights();
         }
 
