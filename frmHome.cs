@@ -259,7 +259,7 @@ namespace Music_Playlist_Manager_Group42
 
                 frmPlaylist myForm = new frmPlaylist(chosen);
                 myForm.ShowDialog();
-                SavePlaylists();
+                SaveCurrentUser();
               
                 // Show the home form again
                 this.Show();
