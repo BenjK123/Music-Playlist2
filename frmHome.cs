@@ -272,21 +272,7 @@ namespace Music_Playlist_Manager_Group42
                 MessageBox.Show("Please select a playlist from the list first.");
             }
         }
-        private void SavePlaylists()
-        {
-            try
-            {
-                using (FileStream outFile = new FileStream("playlists.ser", FileMode.Create, FileAccess.Write))
-                {
-                    BinaryFormatter bFormatter = new BinaryFormatter();
-                    bFormatter.Serialize(outFile, Playlists);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error saving: " + ex.Message);
-            }
-        }
+       
 
         private void LoadPlaylists()
         {
